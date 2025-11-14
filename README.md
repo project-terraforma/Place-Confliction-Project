@@ -41,7 +41,7 @@ This work is part of the CROWN 102 Overture Maps Foundation partnership, emphasi
   - Acc ≈ 0.60
   - F1 ≈ 0.388
   - AUC ≈ 0.582
-- Conclusion: Model too small; no instruct version → removed from refined OKRs.
+- Conclusion: Model too small; no instruct version → Fine Tuning removed from refined OKRs.
 
 ## ✅ 3. Qwen-3 4B Instruct (Zero-Shot)
 - Most complete results so far:
