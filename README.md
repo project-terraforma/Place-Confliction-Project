@@ -74,11 +74,11 @@ Generated visualizations:
 
 ## 📈 Current Results Snapshot
 ```
-| Model            | Fine-Tuned? | Accuracy | F1-score | AUC-ROC | PR-AUC | Notes |
-|------------------|-------------|----------|----------|---------|--------|-------|
-| Qwen-2 7B        | Yes         | 0.9175   | 0.9316   | TBA     | TBA    | Strongest so far |
-| Qwen-3 4B        | Zero-Shot   | 0.7288   | 0.7833   | 0.7802  | 0.8286 | Most complete metrics |
-| Qwen-3 1.7B      | Zero-Shot   | 0.6008   | 0.3886   | 0.5820  | 0.6528 | Weak baseline |
+| Model            | Fine-Tuned? | Accuracy | Recall   | F1-score | AUC-ROC | PR-AUC | Notes |
+|------------------|-------------|----------|----------|----------|---------|--------|----------|
+| Qwen-2 7B        | Yes         | 0.9175   | 0.9361   | 0.9316   | TBA     | TBA    | Strongest so far |
+| Qwen-3 4B        | Zero-Shot   | 0.7200   | 0.8458   | 0.7838   | 0.7892  | 0.8268 | Most complete metrics |
+| Qwen-3 1.7B      | Zero-Shot   | 0.6008   | 0.9917   | 0.7488   | 0.5820  | 0.6528 | Weak baseline |
 ```
 
 ## 🔧 Next Steps
