@@ -1,0 +1,6 @@
+# Model files
+*.tar.gz
+*.bin
+*.pt
+*.safetensors
+*.pth
