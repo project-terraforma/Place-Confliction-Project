@@ -30,30 +30,59 @@ This work is part of the CROWN 102 Overture Maps Foundation partnership, emphasi
 
 ## 🤖 Models Evaluated (Current Progress)
 ### ✅ 1. Qwen-2 7B Instruct (Fine-Tuned)
-- Fine-tuning completed early.
-- Strong classification:
-  - Accuracy ≈ 0.918
-  - F1 ≈ 0.9316
-- Pending: Add AUC-ROC, PR-AUC, and latency.
+Fine-tuned early on the 3K Overture training data.  
+Now fully re-evaluated using the updated evaluation script with AUC and latency.
 
-## ⚠️ 2. Qwen-3 1.7B Zero-Shot
-- Performed poorly on class 0:
-  - Acc ≈ 0.60
-  - F1 ≈ 0.388
-  - AUC ≈ 0.582
-- Conclusion: Model too small; no instruct version → Fine Tuning removed from refined OKRs.
+- **Classification performance**
+  - Accuracy ≈ **0.9175**
+  - Precision ≈ **0.9271**
+  - Recall ≈ **0.9361**
+  - F1-score ≈ **0.9316**
+- **Ranking quality**
+  - AUC-ROC ≈ **0.9763**
+  - PR-AUC ≈ **0.9837**
+- **Latency**
+  - Total samples: **1200**
+  - Total inference time: **350.15 s**
+  - Avg latency: **0.2918 s / sample**
+  - Time per 1000 samples: **291.79 s**
+- Artifacts:
+  - `qwen2_7b_ft_roc_curve.png`
+  - `qwen2_7b_ft_pr_curve.png`
 
-## ✅ 3. Qwen-3 4B Instruct (Zero-Shot)
-- Most complete results so far:
-  - Accuracy ≈ 0.728
-  - F1 ≈ 0.783
-  - AUC-ROC ≈ 0.7802
-  - PR-AUC ≈ 0.8286
-- Includes ROC and PR curves.
+This model now has complete benchmark data and serves as the strongest baseline for comparison against Qwen3-4B FT.
 
-## ⏳ 4. Qwen-3 4B Instruct (Fine-Tuned)
-- Next model to train with QLoRA.
-- Expected to outperform 4B zero-shot while being more efficient than 7B FT.
+---
+
+### ⚠️ 2. Qwen-3 1.7B Zero-Shot
+- Accuracy ≈ **0.6008**
+- AUC-ROC ≈ **0.5820**
+- PR-AUC ≈ **0.6528**
+- Extremely poor on negative class → removed from FT OKRs.
+
+---
+
+### ✅ 3. Qwen-3 4B Instruct (Zero-Shot)
+- Accuracy ≈ **0.7288**
+- F1-score ≈ **0.7838**
+- AUC-ROC ≈ **0.7892**
+- PR-AUC ≈ **0.8286**
+
+---
+
+### ✅ 4. Qwen-3 4B Instruct (Fine-Tuned, QLoRA)
+Strong overall model with best AUC/PR metrics.
+
+- **Classification**
+  - Accuracy ≈ **0.9158**
+  - F1-score ≈ **0.9293**
+- **Ranking quality**
+  - AUC-ROC ≈ **0.9755**
+  - PR-AUC ≈ **0.9833**
+- **Latency**
+  - Avg latency: **0.2146 s / sample**
+
+---
 
 ## 📊 Evaluation Metrics
 Each model is evaluated using:
@@ -73,12 +102,13 @@ Generated visualizations:
 - Confusion Matrix
 
 ## 📈 Current Results Snapshot
-```
-| Model            | Fine-Tuned? | Accuracy | Recall   | F1-score | AUC-ROC | PR-AUC | Notes |
-|------------------|-------------|----------|----------|----------|---------|--------|----------|
-| Qwen-2 7B        | Yes         | 0.9175   | 0.9361   | 0.9316   | TBA     | TBA    | Strongest so far |
-| Qwen-3 4B        | Zero-Shot   | 0.7200   | 0.8458   | 0.7838   | 0.7892  | 0.8268 | Most complete metrics |
-| Qwen-3 1.7B      | Zero-Shot   | 0.6008   | 0.9917   | 0.7488   | 0.5820  | 0.6528 | Weak baseline |
+```text
+| Model            | Setting    | Accuracy | Recall   | F1-score | AUC-ROC | PR-AUC | Latency (s/sample) | Notes                                    |
+|------------------|----------- |----------|----------|----------|---------|--------|---------------------|------------------------------------------|
+| Qwen-2 7B        | Fine-tuned | 0.9175   | 0.9361   | 0.9316   | 0.9763  | 0.9837 | 0.2918              | Highest accuracy; very strong baseline   |
+| Qwen-3 4B        | Fine-tuned | 0.9158   | 0.9222   | 0.9293   | 0.9755  | 0.9833 | 0.2146              | Best speed/performance trade-off         |
+| Qwen-3 4B        | Zero-shot  | 0.7288   | 0.8458   | 0.7838   | 0.7892  | 0.8286 | N/A                 | Strongest zero-shot baseline             |
+| Qwen-3 1.7B      | Zero-shot  | 0.6008   | 0.9917   | 0.7488   | 0.5820  | 0.6528 | N/A                 | Poor performance → not used for FT       |
 ```
 
 ## 🔧 Next Steps
