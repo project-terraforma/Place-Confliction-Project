@@ -133,11 +133,9 @@ Generated visualizations:
 - Confusion Matrix
 
 ## 📈 Current Results Snapshot
-```text
 | Model            | Setting    | Accuracy | Recall   | F1-score | AUC-ROC | PR-AUC | Latency (s/sample) | Notes                                    |
 |------------------|----------- |----------|----------|----------|---------|--------|---------------------|------------------------------------------|
 | Qwen-2 7B        | Fine-tuned | 0.9175   | 0.9361   | 0.9316   | 0.9763  | 0.9837 | 0.2918              | Highest accuracy; very strong baseline   |
 | Qwen-3 4B        | Fine-tuned | 0.9158   | 0.9222   | 0.9293   | 0.9755  | 0.9833 | 0.2146              | Best speed/performance trade-off         |
 | Qwen-3 4B        | Zero-shot  | 0.7288   | 0.8458   | 0.7838   | 0.7892  | 0.8286 | 0.1539              | Strongest zero-shot baseline             |
 | Qwen-3 1.7B      | Zero-shot  | 0.6008   | 0.9917   | 0.7488   | 0.5820  | 0.6528 | 0.0862              | Poor performance → not used for FT       |
-```
