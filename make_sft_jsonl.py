@@ -4,7 +4,7 @@ import json
 import os
 import random
 
-# 你可以改成命令行参数，这里用常量最简单
+# You can change it to command-line arguments; using constants is the simplest approach here.
 CSV_PATH = "overture_cleaned_places.csv"
 OUT_DIR  = "sft_data"
 SEED     = 42
@@ -17,12 +17,12 @@ def safe_str(x):
     return str(x).strip()
 
 def join_non_empty(parts, sep=" | "):
-    """只拼接非空字段，避免出现一堆 | | |"""
+    """Only concatenate non-empty fields to avoid a bunch of... | | |"""
     parts = [p for p in parts if p]
     return sep.join(parts)
 
 def row_to_side(name, category, address, phone, website):
-    """把单侧信息组合成紧凑字符串: name | category | address | phone | website"""
+    """Combine one-sided information into a compact string: name | category | address | phone | website"""
     return join_non_empty([
         safe_str(name),
         safe_str(category),
@@ -32,7 +32,7 @@ def row_to_side(name, category, address, phone, website):
     ])
 
 def to_record(A_text, B_text, y_int):
-    """构造指令样本：只要求回答 YES/NO"""
+    """Construct instruction sample: Only answer required YES/NO"""
     instr = (
         "Decide whether the two place records refer to the same real-world place. "
         "Answer ONLY 'YES' or 'NO'."
@@ -44,10 +44,10 @@ def to_record(A_text, B_text, y_int):
     }
 
 def main():
-    # 读取 CSV
+    # Read CSV
     df = pd.read_csv(CSV_PATH)
 
-    # 兼容标签列名：优先 label_gt，其次 label；没有就报错更明确
+    # Compatible label column names: prioritize label_gt, then label; if none are specified, an error message will be displayed more clearly.
     if "label_gt" in df.columns:
         labels = df["label_gt"]
     elif "label" in df.columns:
@@ -55,7 +55,7 @@ def main():
     else:
         raise ValueError("CSV 中找不到标签列：需要 'label_gt' 或 'label'。")
 
-    # 检查必须字段是否存在（候选+基准）
+    # Check if the required fields (candidate + baseline) exist.
     required_cols = [
         "name","category","address","phone","website",
         "base_name","base_category","base_address","base_phone","base_website"
@@ -66,22 +66,22 @@ def main():
 
     data = []
     for _, r in df.iterrows():
-        # 组装 Candidate / Base 侧文本（自动跳过空字段）
+        # Assemble the Candidate/Base side text (automatically skip empty fields).
         A = row_to_side(r.get("name",""), r.get("category",""), r.get("address",""),
                         r.get("phone",""), r.get("website",""))
         B = row_to_side(r.get("base_name",""), r.get("base_category",""), r.get("base_address",""),
                         r.get("base_phone",""), r.get("base_website",""))
 
-        # 如果两边都太空，跳过
+        # If both sides are empty, skip this step.
         if not A and not B:
             continue
 
         y = int(r.get("label_gt", r.get("label", 0)))
         data.append(to_record(A, B, y))
-        # 顺序交换增强（A↔B）
+        # Sequential swap enhancement (A↔B)
         data.append(to_record(B, A, y))
 
-    # 打乱并切分
+    # Disassemble and cut
     random.shuffle(data)
     n = len(data)
     n_train = int(0.7 * n)
@@ -100,7 +100,7 @@ def main():
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
     print(f"✅ Done. Samples: {n}  → train/val/test = {n_train}/{n_val}/{n_test}")
-    # 可选：打印 2 条示例
+    # Optional: Print 2 examples
     print("Example:")
     for e in data[:2]:
         print(json.dumps(e, ensure_ascii=False, indent=2))
